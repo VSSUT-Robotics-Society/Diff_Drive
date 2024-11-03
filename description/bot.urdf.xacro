@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="mangalyaan">
+    <!-- Base Plate -->
+    <xacro:include filename="base.xacro"/>
+
+    <!-- Wheels -->
+    <xacro:include filename="wheels.xacro"/>
+
+    <!-- LIDAR -->
+    <xacro:include filename="lidar.xacro"/>
+
+    <!-- ROS Control -->
+    <xacro:include filename="ros2_control.xacro"/>
+    
+</robot>
