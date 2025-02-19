@@ -1,4 +1,4 @@
-import os
+import os, xacro
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -6,6 +6,7 @@ from launch import LaunchDescription
 from launch.substitutions import LaunchConfiguration, Command
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
+from launch.conditions import IfCondition
 
 
 def generate_launch_description():
@@ -17,8 +18,19 @@ def generate_launch_description():
     # Process the URDF file
     pkg_path = os.path.join(get_package_share_directory('mangalyaan'))
     xacro_file = os.path.join(pkg_path,'description','bot.urdf.xacro')
-    # robot_description_config = xacro.process_file(xacro_file).toxml()
-    robot_description_config = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
+    robot_description_config = xacro.process_file(xacro_file).toxml()
+    # robot_description_config = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
+
+    # Create a RViz node
+    rviz_config = os.path.join(pkg_path, 'config', 'urdf_view.rviz')
+    node_rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=['-d', rviz_config],
+        condition=IfCondition(LaunchConfiguration('use_rviz'))
+    )
     
     # Create a robot_state_publisher node
     params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
@@ -28,6 +40,15 @@ def generate_launch_description():
         output='screen',
         parameters=[params]
     )
+
+    # Create a joint_state_publisher_gui node
+    node_jsp_gui = Node(
+    package='joint_state_publisher_gui',
+    executable='joint_state_publisher_gui',
+    name='joint_state_publisher',
+    output='screen',
+    condition=IfCondition(LaunchConfiguration('use_jsp'))
+  )
 
 
     # Launch!
@@ -40,6 +61,16 @@ def generate_launch_description():
             'use_ros2_control',
             default_value='true',
             description='Use ros2_control if true'),
+        DeclareLaunchArgument(
+            'use_rviz',
+            default_value='true',
+            description='Use rviz if true'),
+        DeclareLaunchArgument(
+            'use_jsp',
+            default_value='true',
+            description='Use joint_state_publisher_gui if true'),
 
-        node_robot_state_publisher
+        node_rviz,
+        node_robot_state_publisher,
+        node_jsp_gui
     ])

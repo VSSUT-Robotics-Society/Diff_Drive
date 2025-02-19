@@ -8,7 +8,7 @@ This repo contains the necessary ROS files required for building a Differential 
 ```ros2 launch mangalyaan bot.launch.py```
 
 - To Run/Check URDF Files: 
-```ros2 launch mangalyaan check_urdf.launch.py```
+```ros2 launch mangalyaan urdf.launch.py```
 
 - For Rviz: 
 ```rviz2 -d "~path/to/the/file.rviz"```

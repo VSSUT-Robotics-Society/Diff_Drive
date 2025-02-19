@@ -25,7 +25,7 @@ def generate_launch_description():
     urdf = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','urdf.launch.py'
-                )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true'}.items()
+                )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true', 'use_rviz': 'false', 'use_jsp': 'false'}.items()
     )
 
     keybd = IncludeLaunchDescription(
