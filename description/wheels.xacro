@@ -38,5 +38,5 @@
   <!-- <xacro:wheel prefix="top_left" parent="base_plate" x="${base_width/2 - 0.03}" y="${base_length/2 + wheel_gap + wheel_width/2}" z="-0.04" z_sign="1"/>
   <xacro:wheel prefix="top_right" parent="base_plate" x="${base_width/2 - 0.03}" y="-${base_length/2 + wheel_gap + wheel_width/2}" z="-0.04" z_sign="1"/> -->
   <xacro:wheel prefix="bottom_left" parent="base_plate" x="-${base_length/2 - 0.013}" y="${base_width/2 + wheel_gap + wheel_width/2}" z="-0.04" z_sign="-1"/>
-  <xacro:wheel prefix="bottom_right" parent="base_plate" x="-${base_length/2 - 0.013}" y="-${base_width/2 + wheel_gap + wheel_width/2}" z="-0.04" z_sign="-1"/>
+  <xacro:wheel prefix="bottom_right" parent="base_plate" x="-${base_length/2 - 0.013}" y="-${base_width/2 + wheel_gap + wheel_width/2}" z="-0.04" z_sign="1"/>
 </robot>

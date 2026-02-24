@@ -69,8 +69,7 @@ def generate_launch_description():
             'use_jsp',
             default_value='true',
             description='Use joint_state_publisher_gui if true'),
-
-        node_rviz,
         node_robot_state_publisher,
+        node_rviz,
         node_jsp_gui
     ])

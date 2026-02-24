@@ -9,7 +9,7 @@
         <joint name="${prefix}_joint" type="fixed">
             <parent link="${parent}"></parent>
             <child link="${prefix}_caster"></child>
-            <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
+            <origin xyz="${x} ${y} ${z}" rpy="${pi/2 * z_sign} 0 0" />
             <axis xyz="0 0 ${-1 * z_sign}" />
         </joint>
 
@@ -34,6 +34,6 @@
     </xacro:macro>
 
     <!-- Casters (two at the bottom) -->
-    <xacro:caster prefix="top_left" parent="base_plate" x="${base_length/2 - 0.01}" y="${base_width/2 - 0.01 }" z="${-caster_gap}" z_sign="1"/>
+    <xacro:caster prefix="top_left" parent="base_plate" x="${base_length/2 - 0.01}" y="${base_width/2 - 0.01 }" z="${-caster_gap}" z_sign="-1"/>
     <xacro:caster prefix="top_right" parent="base_plate" x="${base_length/2 - 0.01}" y="-${base_width/2 - 0.01 }" z="${-caster_gap}" z_sign="1"/>
 </robot>    
