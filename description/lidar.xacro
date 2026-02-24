@@ -7,7 +7,7 @@
   <!-- Links -->
   <joint name="lidar_joint" type="fixed">
     <origin xyz="0 0 ${lidar_height/2}"/>
-    <parent link="top_plate"/>
+    <parent link="base_plate"/>
     <child link="lidar_link"/>
   </joint>
 
@@ -27,11 +27,9 @@
         <cylinder length="${lidar_height}" radius="${lidar_radius}"/>
       </geometry>
     </collision>
-    <inertial>
-      <origin xyz="0 0 0"/>
-      <mass value="0.1"/>
-      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
-    </inertial>
+    <xacro:inertial_cylinder mass="0.1" radius="${lidar_radius}" length="${lidar_height}">
+      <origin xyz="0 0 ${lidar_height/2}"/>
+    </xacro:inertial_cylinder>
   </link>
   <gazebo reference="lidar_link">
     <material>Gazebo/Red</material>

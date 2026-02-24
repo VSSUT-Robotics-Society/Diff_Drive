@@ -20,7 +20,7 @@ def generate_launch_description():
     # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
     # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
 
-    package_name='mangalyaan' #<--- CHANGE ME
+    package_name='diff_bot' #<--- CHANGE ME
 
     urdf = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -109,7 +109,7 @@ def generate_launch_description():
         urdf,
         # keybd,
         # twist_mux,
-        delayed_controller_manager,
-        delayed_diff_drive_spawner,
-        delayed_joint_broad_spawner
+        # delayed_controller_manager,
+        # delayed_diff_drive_spawner,
+        # delayed_joint_broad_spawner
     ])

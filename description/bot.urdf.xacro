@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="mangalyaan">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="Diff_Bot">
+    <!-- Base Plate -->
+    <xacro:include filename="inertial_macros.xacro"/>
+    
     <!-- Base Plate -->
     <xacro:include filename="base.xacro"/>
+
+    <!-- Caster -->
+    <xacro:include filename="caster.xacro"/>
 
     <!-- Wheels -->
     <xacro:include filename="wheels.xacro"/>
@@ -10,6 +16,6 @@
     <xacro:include filename="lidar.xacro"/>
 
     <!-- ROS Control -->
-    <xacro:include filename="ros2_control.xacro"/>
+    <!-- <xacro:include filename="ros2_control.xacro"/> -->
     
 </robot>
