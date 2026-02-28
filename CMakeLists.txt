@@ -37,4 +37,11 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
+# install Python executable(s) so they are available with ros2 run
+install(
+  PROGRAMS
+    nodes/topics_pub_sub.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()
