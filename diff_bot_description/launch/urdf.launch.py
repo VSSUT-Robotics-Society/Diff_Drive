@@ -16,10 +16,9 @@ def generate_launch_description():
     use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     # Process the URDF file
-    pkg_path = os.path.join(get_package_share_directory('diff_bot'))
+    pkg_path = os.path.join(get_package_share_directory('diff_bot_description'))
     xacro_file = os.path.join(pkg_path,'description','bot.urdf.xacro')
     robot_description_config = xacro.process_file(xacro_file).toxml()
-    # robot_description_config = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
 
     # Create a RViz node
     rviz_config = os.path.join(pkg_path, 'config', 'urdf_view.rviz')
@@ -57,10 +56,6 @@ def generate_launch_description():
             'use_sim_time',
             default_value='false',
             description='Use sim time if true'),
-        DeclareLaunchArgument(
-            'use_ros2_control',
-            default_value='false',
-            description='Use ros2_control if true'),
         DeclareLaunchArgument(
             'use_rviz',
             default_value='true',
