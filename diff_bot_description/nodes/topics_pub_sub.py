@@ -82,8 +82,8 @@ class DiffControllerNode(Node):
         r = 0.035   # Wheel radius (m)
         
         # Calculate angular velocities for right and left wheels
-        self.sent_ang_vel[0] = (vx + wz*R) / r  # wheel radius = 0.035m
-        self.sent_ang_vel[1] = (vx - wz*R) / r
+        self.sent_ang_vel[0] = (vx - wz*R) / r  # wheel radius = 0.035m
+        self.sent_ang_vel[1] = (vx + wz*R) / r
         
         # Clamp velocities to max limits
         self.sent_ang_vel[0] = max(-self.ang_vel_limit, min(self.ang_vel_limit, self.sent_ang_vel[0]))
