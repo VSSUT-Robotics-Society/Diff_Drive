@@ -1,8 +1,7 @@
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription
 from launch_ros.actions import Node
 from launch.actions import TimerAction
-from launch.actions import SetEnvironmentVariable
 
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
@@ -12,11 +11,6 @@ import os
 def generate_launch_description():
 
     pkg_share = get_package_share_directory('diff_bot_description')
-
-    resource_path = SetEnvironmentVariable(
-        name='GZ_SIM_RESOURCE_PATH',
-        value=os.environ.get('GZ_SIM_RESOURCE_PATH', '') + ':' + pkg_share
-    )
 
     # Include your existing URDF launch
     urdf_launch = IncludeLaunchDescription(
@@ -32,7 +26,7 @@ def generate_launch_description():
 
     # Spawn robot into Gazebo (gz sim)
     spawn = TimerAction(
-        period=2.0,
+        period=1.0,
         actions=[
             Node(
                 package='ros_gz_sim',
@@ -40,22 +34,13 @@ def generate_launch_description():
                 arguments=[
                     '-name', 'diff_bot',
                     '-topic', '/robot_description',
-                    '-x', '0.0',
-                    '-y', '-0.5',
+                    '-x', '-7.0', # set these as per your world
+                    '-y', '3.0',
                     '-z', '0.2',
                 ],
                 output='screen'
             )
         ]
-    )
-
-    gz_bridge = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        parameters=[{
-            'config_file': os.path.join(pkg_share, 'config', 'gz_bridge.yaml')
-        }],
-        output='screen'
     )
 
     controller_manager = Node(
@@ -70,26 +55,28 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster"],
     )
 
+    twist_to_stamped_adapter = Node(
+        package='diff_bot_description',
+        executable='twist_to_stamped',
+        output='screen',
+    )
+
     teleop = Node(
         package='teleop_twist_keyboard',
         executable='teleop_twist_keyboard',
         name='teleop_twist_keyboard',
-        prefix='xterm -e',  # opens teleop in its own terminal
+        prefix='xterm -e',  # opens teleop in a separate window
         output='screen',
         parameters=[
-            {'stamped': True}
+            {'stamped': False}
         ],
-        remappings=[
-            ('/cmd_vel', '/diff_drive_controller/cmd_vel')
-        ]
     )
 
     return LaunchDescription([
-        resource_path,
         urdf_launch,
         spawn,
         controller_manager,
         joint_state_broadcaster,
-        gz_bridge,
-        # teleop,
+        twist_to_stamped_adapter,
+        teleop,
     ])

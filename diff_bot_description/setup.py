@@ -19,10 +19,10 @@ setup(
             glob('description/*')),
         (os.path.join('share', package_name, 'config'),
             glob('config/*')),
-        (os.path.join('share', package_name, 'worlds'),
-            glob('worlds/*')),
         (os.path.join('share', package_name, 'meshes'),
             glob('meshes/*')),
+        (os.path.join('share', package_name, 'maps'),
+            glob('maps/*')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -37,7 +37,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'comms = nodes.topics_pub_sub:main',
+            'comms = diff_bot_description.topics_pub_sub:main',
+            'twist_to_stamped = diff_bot_description.twist_to_stamped:main',
         ],
     },
 )
